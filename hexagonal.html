@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Architecture Hexagonale</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/irun.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Architecture Hexagonale</h1>
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Les difficultés de la modélisation
+
+                        * Choix techniques précipités
+                        * Immobilisme technique
+                        * Testabilité compliqué et mal dirigée
+
+                        Notes:
+
+                        1. Des choix techniques fait en début de projet, au moment où l’on a le moins de connaissance,
+                            Un contexte qui fait qu’il faut prendre des décisions rapidement
+                        2. Il est difficile de changer les choix techniques une fois qu’il sont fait, nécessité de retester tout un ensemble
+                            technique, cela induit des risques de régression. <br>
+                            Plus l’application grandit plus les modifications techniques sont lourdes et complexes
+                        3. Le fait que le métier et l’infra logicielle soit confondu et fortement couplé induit une testabilitée réduite. Les tests 
+                            sont souvent long a s’exécuter et compliqué à mettre en place à cause du grand nombre de prérequis des dépendances d’infra.
+                    </script>
+                </section>
+                <section>
+                    <h2>Architecture en Couches</h2>
+                    <div style="display: grid;grid-gap: 10px;">
+                        <div class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/hexagonal/couches.png" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <ul>
+                                <li class="fragment">Généralement les couches supérieures ne connaissent pas les
+                                    implémentationsdes couches inférieures</li>
+                                <li class="fragment">Intuitivement, on pourrait penser que la logique métier se trouve
+                                    dans la couche service</li>
+                                <li class="fragment">Et ben non, généralement le métier est dispersé entre la couche
+                                    service et persistence</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        <p>Généralement la couche service ne contient que des services sans état, qui manipulent des
+                            Entité issues de la couche
+                            de persistence</p>
+                        <p>Pire, les Entités de la couche de persistence sont couvertes d’annotations </p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Les principes SOLID</h2>
+                    <ul>
+                        <li><strong class="fragment highlight-red">S</strong> <em>Single responsability principe</em></li>
+                        <li><strong class="fragment highlight-red">O</strong> <em>Open/closed principe</em></li>
+                        <li><strong class="fragment highlight-red">L</strong> <em>Liskov substitution principle</em></li>
+                        <li><strong class="fragment highlight-red">I</strong> <em>Interface segregation principle</em></li>
+                        <li><strong class="fragment highlight-red">D</strong> <em>Dependency inversion principle</em></li>
+                    </ul>
+
+                    <div class="fragment" style="font-size: 60%;">
+                        <a href="https://www.youtube.com/watch?v=IkMqG-dsD20">Software Craftsmanship Tidbit - Uncle Bob
+                            Martin - Being Professional</a><br />
+                        <a href="">Coder Proprement</a>
+                    </div>
+                    <aside class="notes">
+                        <ul>
+                            <li>une classe, une fonction ou une méthode doit avoir une et une seule responsabilité</li>
+                            <li>une classe doit être ouverte à l'extension, mais fermée à la modification</li>
+                            <li>une instance de type T doit pouvoir être remplacée par une instance de type G, tel que
+                                G sous-type de T,
+                                sans que cela ne modifie la cohérence du programme</li>
+                            <li>préférer plusieurs interfaces spécifiques pour chaque client plutôt qu'une seule
+                                interface générale</li>
+                            <li>il faut dépendre des abstractions, pas des implémentations</li>
+                        </ul>
+                        <p>SOLID est un acronyme représentant cinq principes de bases pour la programmation orientée
+                            objet,
+                            introduits par Michael Feathers et Robert C. Martin au début des années 2000</p>
+                    </aside>
+                </section>
+                <section>
+                    <h3>Principe d’inversion des dépendances</h3>
+                    <div style="display: grid;grid-gap: 10px;">
+                        <div class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/hexagonal/normal-dependencies.png" />
+                        </div>
+                        <div class="fragment" style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <img src="img/hexagonal/inversed-dependencies.png" />
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        <p>Grace à ça, A et B peuvent être déployés séparément.</p>
+                        <p>B vient se brancher à A</p>
+                        <p>A peut avoir plusieurs dépendances de ce genre</p>
+                    </aside>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <em>l’architecture hexagonale à la rescousse...</em>
+                </section>
+                <section>
+                    <p>idée simple, isoler le métier des détails techniques de l’implémentation</p>
+                    <img class="fragment" style="height: 400px" src="img/hexagonal/outside_inside1.png" />
+                </section>
+                <section>
+                    <p>le métier ne dépend de rien</p>
+                    <img class="fragment" style="height: 300px" src="img/hexagonal/adapters2.png" />
+                    <p class="fragment">toutes les dépendances vont de l’extérieur vers l’intérieur</p>
+                    <p class="fragment">une couche d’adaptation fait le lien entre les mondes</p>
+                </section>
+                <section>
+                    <h3>Un modèle agnostique</h3>
+                    <ul>
+                        <li class="fragment">pas de framework</li>
+                        <li class="fragment">pas de base de données</li>
+                        <li class="fragment">pas d’accès réseau</li>
+                        <li class="fragment">pas d’accès disque/IO</li>
+                    </ul>
+                    <p class="fragment">Il ne doit JAMAIS y avoir dans le modèle de référence vers l’infrastructure</p>
+                </section>
+                <section>
+                    <h3>Les Ports</h3>
+                    <p style="font-size:90%;">Le modèle expose des interfaces qui ont un sens métier.</p>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;font-size: 70%;">
+                        <figure class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/hexagonal/apis2.png" />
+                            <figcaption>Application Provider Interfaces</figcaption>
+                        </figure>
+                        <figure class="fragment" style="grid-column: 2 / 2;grid-row:1;">
+                            <img src="img/hexagonal/spis1.png" />
+                            <figcaption>Service Provider Interfaces</figcaption>
+                        </figure>
+                    </div>
+                    <p class="fragment">Ces interfaces faisant partie du domaine, elles doivent avoir un sens métier</p>
+                </section>
+                <section>
+                    <h3>Une infra qui s’adapte</h3>
+                    <div style="display: grid;grid-gap: 10px;">
+                        <div class="fragment" style="grid-column: 1 / 2 span;grid-row: 1 / 2;">Si on change de base de
+                            données, on change l’adaptateur et on ne touche pas au métier</div>
+                        <figure class="fragment" style="grid-column: 1 / 2;grid-row: 2 / 2;"><img src="img/hexagonal/dip1.png" /></figure>
+                        <figure class="fragment" style="grid-column: 2 / 2;grid-row: 2 / 2;"><img src="img/hexagonal/dip2.png" /></figure>
+                    </div>
+                    <aside class="notes">
+                        <p>Pour les composants qui appellent notre métier, c’est facile. Ils n’ont qu’à contacter nos
+                            API. Mais quid des fournisseurs que notre métier va avoir besoin de contacter ?</p>
+                        <p>Comment faire en sorte que notre modèle n’en ait pas connaissance ?</p>
+                        <p>On utilise l’injection de dépendances.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h3>On y gagne ...</h3>
+                    <ul>
+                        <li class="fragment">Une testabilité du métier accrue</li>
+                        <li class="fragment">Une pérennisation du métier face aux changements techniques</li>
+                        <li class="fragment">Une capacité à livrer de la valeur rapidement</li>
+                    </ul>
+                    <aside class="notes">
+                        Au démarrage d’une application, l’usage de l’architecture hexagonale permet de démontrer
+                        rapidement puisque l’on ne dépend plus de contraintes extérieures comme l’infrastructure.
+                        On peut aisément remplacer une base de données par un fichier plat ou une application web par
+                        une ligne de commande et cela suffit amplement à proposer un MVP au bout du premier sprint. On
+                        repousse ainsi les choix techniques à plus tard, au moment où notre connaissance sera plus à
+                        même de faire un choix éclairé. Mieux, on se concentre sur le besoin client (le métier) et l’on
+                        accélère la boucle de feedback pour s’assurer que l’on se trouve sur la bonne voie.
+                    </aside>
+                </section>
+            </section>
+            <section>
+                <h2>TL;DR</h2>
+                <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;font-size: 70%;">
+                    <ul style="grid-column: 1 / 2;grid-row: 1;">
+                        <li class="fragment">Isolation du métier</li>
+                        <li class="fragment">pas d’infra dans le domaine</li>
+                        <li class="fragment">des interfaces avec du sens métier</li>
+                        <li class="fragment">privilégier les type fort au String</li>
+                        <li class="fragment">pas d’infra dans le domaine</li>
+                    </ul>
+                    <figure style="grid-column: 2 / 2;grid-row: 1;">
+                        <img src="img/hexagonal/clean-architecture.png" />
+                    </figure>
+                <div>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            dependencies: [
+                { src: 'plugin/markdown/marked.js' },
+                { src: 'plugin/markdown/markdown.js' },
+                { src: 'plugin/notes/notes.js', async: true },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+            ]
+        });
+    </script>
+</body>
+
+</html>
