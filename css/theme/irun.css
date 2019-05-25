@@ -272,7 +272,8 @@ body {
 .reveal .slides section .fragment.highlight-yellow,
 .reveal .slides section .fragment.highlight-current-yellow,
 .reveal .slides section .fragment.highlight-pink,
-.reveal .slides section .fragment.highlight-current-pink {
+.reveal .slides section .fragment.highlight-current-pink,
+.reveal .slides section .fragment.highlight-current-irun {
   opacity: 1;
   visibility: inherit; }
 
@@ -284,3 +285,10 @@ body {
   color: #ff35b7; }
 .reveal .slides section .fragment.highlight-current-pink.current-fragment {
   color: #ff35b7; }
+
+.reveal .slides section .highlight-irun {
+  background-color: #c7e02b;
+  color: #435057; }
+.reveal .slides section .fragment.highlight-current-irun.current-fragment {
+    background-color: #c7e02b;
+    color: #435057; }
