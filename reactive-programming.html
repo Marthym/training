@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Programmation Réactive</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/irun.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-state="headright">
+                <div class="main-title">
+                    <h1 style="font-size: 42pt;">Programmation Réactive</h1>
+                </div>
+            </section>
+            <section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Avant Propos
+					</script>
+                </section>
+                <section>
+                    <h3>Programmation Impérative</h3>
+
+                    <ul>
+                        <li class="fragment">Un action déclenche une réaction</li>
+                        <li class="fragment">Un thread par requête
+                            <figure style="grid-column: 2 / 2;grid-row: 1; text-align: right;margin:0;margin-top: -50px;">
+                                <img src="img/reactive/thread-per-request.png" />
+                            </figure>
+                        </li>
+                        <li class="fragment">Le thread attend le résultat des appels système (IO, Réseau, ...)
+                            <figure style="grid-column: 2 / 2;grid-row: 1; text-align: right;margin:0;margin-top: -50px;">
+                                <img src="img/reactive/bloquing-thread.png" />
+                            </figure>
+                        </li>
+                        <li class="fragment">Une augmentation du nombre de thread permet d’accepter plus de requêtes.</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <p>Une augmentation de thread à l’infinie n’est pas possible</p>
+                        <p>On se retrouve limiter à la latence du matériel</p>
+                        <p>On peu aussi parler de la mémoire nécessaire pour des pool de thread surdimensionnés</p>
+                        <p>Et du fait que la CPU n’est pas vraiment bien utilisé puisqu'en attente la plus part du temps</p>
+                    </aside>
+                </section>
+                <section>
+                    <h3>Programmation Asynchrone</h3>
+                    
+                    <ul>
+                        <li class="fragment">Un évènement déclenche une action
+                            <figure style="grid-column: 2 / 2;grid-row: 1; text-align: center;">
+                                <img src="img/reactive/event-loop.png" />
+                            </figure>
+                        </li>
+                        <li class="fragment">Le thread n’attend pas de réponse</li>
+                        <li class="fragment">Demande un profond changement de mode de pensée</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <p>Programmation bloquante interdite</p>
+                        <p>Ouvertement multi-thread</p>
+                        <p>Tout n’est qu’évènement et flux d’évènement</p>
+                    </aside>
+                </section>
+            </section>
+
+
+            <section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Programmation Réactive
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Concepts Généraux
+                        
+                        * **Réactive**: *Termes utilisé pour définir la Programmation dirigé par les evènements*.
+                        * **Non-Bloquant**: *Qui ne bloque pas les threads*.
+                        * **Publisher**: *Elément de l’application qui produit des données*
+                        * **Suscriber**: *Elément de l’application qui consomme ces données*
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Les Mythes de la réactivité
+                        
+                        * Asynchrone / Concurrent ne veut pas dire réactif
+                        * Réactif ne veut pas dire asynchrone
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### La Backpressure
+                        
+                        * Quand un Publisher émet plus de données que le Suscriber ne peut en traiter, la pile d’èxécution grossit sans limite.
+                        * La Backpressure permet au Suscriber de contrôler ce flux de données.
+                        * Si la source n’est pas contrôlable, le Publisher peut bufferizer ou dropper les évènements
+                    </script>
+                </section>
+                <section>
+                    <h3>Les API Standard Java</h3>
+                    <pre><code class="java">
+public interface Publisher&lt;T> {
+    public void subscribe(Subscriber&lt;? super T> s);
+}
+                    </code></pre>
+                    <pre><code class="java">
+package org.reactivestreams;
+
+public interface Subscriber&lt;T> {
+    void onSubscribe(Subscription s);
+    void onNext(T e);
+    void onError(Throwable t);
+    void onComplete();
+}
+                    </code></pre>
+                    <aside class="notes">
+                        Toutes les méthodes sont `void`. C’est unidirectionnel et n’autorise pas de réponse.
+                        Car qui dit réponse dit attente de réponse.
+                    </aside>
+                </section>
+                <section>
+                    <span><img src="img/reactive/reactive-streams-api.png" alt="Reactive Streams API" /></span>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2 style="position:absolute;padding-top:215px;padding-left:109px;">Spring Reactor</h2>
+                    <span><img src="img/reactive/springfield-reactor.png" alt="Spring Reactor" /></span>
+                    <aside class="notes">
+                        Reactor, au même titre que RxJava, est une implémentation des API reactivestreams.
+                    </aside>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Les types
+
+                        * Mono&lt;T> 
+                          ``` java 
+                          Mono.empty();
+                          Mono.just("e4developer");
+                          Mono.fromCallable(() -> "e4developer");
+                          ```
+                        * Flux&lt;T>
+                        ``` java 
+                        Flux.empty();
+                        Flux.range(1, 10);
+                        Flux.just("e4developer", "reactive", "reactor");
+                        Flux.create(sink -> {
+                                dsl.selectFrom(CMSY_PAGE).fetch()
+                                    .forEach(record -> {
+                                        Entity<Page> entity = PAGE_RECORD_MAPPER.from(record);
+                                        sink.next(entity);
+                                });
+                                sink.complete();
+                            });
+                        ```
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Les opérations
+
+                        | Mono             | Flux          |                   |                |
+                        |------------------|---------------|-------------------|----------------|
+                        | defaultIfEmpty() | as()          | flatMapIterable() | sort()         |
+                        | flatMap()        | collectList() | fromArray()       | subscribe()    |
+                        | flatMapMany()    | compose()     | fromStream()      | subscribeOn()  |
+                        | map()            | concatWith()  | index()           | take()         |
+                        | retryWhen()      | defer()       | just()            | transform()    |
+                        | then()           | distinct()    | map()             | zip()          |
+                        | timeout()        | filter()      | range()           |                |
+                        |                  | flatMap()     | skip()            |                |
+                        <!-- .element: style="font-size:60%;" -->
+
+                        https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html
+                    </script>
+                </section>
+                <section>
+                    <h4>create</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/createForFlux.svg" alt="create" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.create(sink -> {
+        dsl.selectFrom(CMSY_PAGE).fetch().forEach(record -> {
+            Entity&lt;Page> entity = PAGE_RECORD_MAPPER.from(record);
+            sink.next(entity);
+        });
+        sink.complete();
+    });
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h4>fromArray</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/fromArray.svg" alt="create" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.fromArray(new String[]{"un", "deux", "trois"})
+    .subscribe()
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h4>filter</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/filterForFlux.svg" alt="create" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.fromArray(new String[]{"un", "deux", "trois"})
+    .filter(s -> s.startWith("u"))
+    .subscribe()
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>distinct</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/distinct.svg" alt="create" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.fromArray(new String[]{"un", "deux", "un"})
+    .distinct()
+    .subscribe()
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>map</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/mapForFlux.svg" alt="map" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.fromArray(new String[]{"1", "2", "3"})
+    .map(Integer::valueOf)
+    .subscribe()
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>flatMap</h4>
+                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;">
+                        <div style="grid-column: 1 / 2;grid-row: 1;">
+                            <img src="img/reactive/flatMapForFlux.svg" alt="flatMap" />
+                        </div>
+                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                            <pre><code class="java">
+Flux.fromArray(new String[]{"1", "2", "3"})
+    .flatMap(s -> listAllCharacter(s))
+    .subscribe()
+
+// Pour une entrée, listAllEntity retourne plusieures valeurs
+Flux&lt;Character> listAllEntity(String numero) {
+    return Flux.create(sink -> {
+        for (char c : numero.toCharArray()) {
+            sink.next(Character.valueOf(c));
+        }
+        sink.complete();
+    });
+}
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>La Concurrence</h2>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### publishOn & subscribeOn
+
+                        * **publishOn**: *Toutes les étapes du Flux après le `publishOn` sont exécuté sur des threads séparés.*
+                        * **subscribeOn**: *Toutes les étapes du Flux avant `subscribeOn` sont exécuté sur des threads séparés.*
+                    </script>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ### Les schedulers
+
+                        * **Schedulers.single()**: *Execute sur un pool de threads ne contenant qu’une seule thread*
+                        * **Schedulers.immediate()**: *Execute sur le thread courant (utile pour les tests)*
+                        * **Schedulers.elastic()**: *Execute sur un pool de threads variable, qui grandit en fonction du besoin*
+                        * **Schedulers.parallel()**: *Execute sur un pool de threads fixe*
+
+                        Notes:
+                        * immediate, c’est vraiment que pour les tests, ça ne fait rien en vrai
+                        * parallel, le nombre de threads est déterminé par la CPU
+
+                        Il y a des fonctions pour paramétrer ces différents pool de threads.
+                    </script>
+                </section>
+                <section>
+                    <pre><code class="java">
+Scheduler dbScheduler = 
+    Schedulers.newParallel("db-short-pool", 20);
+
+Mono.fromCallable(() ->
+    dsl.selectFrom(CMSY_PAGE).where(CMSY_PAGE.CMSY_ID.eq(id))
+        .fetchOne(PAGE_RECORD_MAPPER))
+.subscribeOn(dbScheduler)
+.switchIfEmpty(Mono.error(new NoSuchElementException(id)));
+                    </code></pre>
+                    <p>Ici, tout ce qui se passe avant le <em>subscribeOn</em> est exécuté sur le pool de threads réservé 
+                    aux accès BDD courts. Le <em>switchIfEmpty</em> est exécuté sur le thread principal.</p>
+                </section>
+            </section>
+            <section>
+                <h2>Q & R</h2>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            dependencies: [
+                { src: 'plugin/markdown/marked.js' },
+                { src: 'plugin/markdown/markdown.js' },
+                { src: 'plugin/notes/notes.js', async: true },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+            ]
+        });
+    </script>
+</body>
+
+</html>
