@@ -28,6 +28,12 @@
         <div class="slides">
             <section>
                 <h1>Architecture Hexagonale</h1>
+                <aside class="notes">
+                    <p>L’objectif ici n’est pas de vendre l’architecture Hexagonale comme la solution ultime à tous les
+                        maux mais de présenter
+                        des problèmes d’architecture courants et comment l’archi Hexa peut aider à les résoudre.
+                    </p>
+                </aside>
             </section>
 
             <section>
@@ -37,17 +43,17 @@
 
                         * Choix techniques précipités
                         * Immobilisme technique
-                        * Testabilité compliqué et mal dirigée
+                        * Testabilité compliquée et mal dirigée
 
                         Notes:
 
                         1. Des choix techniques fait en début de projet, au moment où l’on a le moins de connaissance,
                             Un contexte qui fait qu’il faut prendre des décisions rapidement
-                        2. Il est difficile de changer les choix techniques une fois qu’il sont fait, nécessité de retester tout un ensemble
+                        2. Il est difficile de changer les choix techniques une fois qu’ils sont faits, nécessité de retester tout un ensemble
                             technique, cela induit des risques de régression. <br>
                             Plus l’application grandit plus les modifications techniques sont lourdes et complexes
-                        3. Le fait que le métier et l’infra logicielle soit confondu et fortement couplé induit une testabilitée réduite. Les tests 
-                            sont souvent long a s’exécuter et compliqué à mettre en place à cause du grand nombre de prérequis des dépendances d’infra.
+                        3. Le fait que le métier et l’infra logicielle soit confondus et fortement couplés induit une testabilité réduite. Les tests 
+                            sont souvent longs à s’exécuter et compliqués à mettre en place à cause du grand nombre de prérequis des dépendances d’infra.
                     </script>
                 </section>
                 <section>
@@ -59,40 +65,49 @@
                         <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
                             <ul>
                                 <li class="fragment">Généralement les couches supérieures ne connaissent pas les
-                                    implémentationsdes couches inférieures</li>
+                                    implémentations des couches inférieures</l i>
                                 <li class="fragment">Intuitivement, on pourrait penser que la logique métier se trouve
                                     dans la couche service</li>
-                                <li class="fragment">Et ben non, généralement le métier est dispersé entre la couche
-                                    service et persistence</li>
+                                <li class="fragment">Mais, généralement le métier est dispersé entre la couche
+                                    service et persistance</li>
                             </ul>
                         </div>
                     </div>
                     <aside class="notes">
                         <p>Généralement la couche service ne contient que des services sans état, qui manipulent des
-                            Entité issues de la couche
-                            de persistence</p>
-                        <p>Pire, les Entités de la couche de persistence sont couvertes d’annotations </p>
+                            Entités issues de la couche
+                            de persistance</p>
+                        <p>Selon les frameworks, les Entités de la couche de persistance sont couvertes d’annotations
+                            qui induisent des dépendances.</p>
                     </aside>
                 </section>
                 <section>
                     <h2>Les principes SOLID</h2>
                     <ul>
-                        <li><strong class="fragment highlight-red">S</strong> <em>Single responsability principe</em></li>
+                        <li><strong class="fragment highlight-red">S</strong> <em>Single responsability principe</em>
+                        </li>
                         <li><strong class="fragment highlight-red">O</strong> <em>Open/closed principe</em></li>
-                        <li><strong class="fragment highlight-red">L</strong> <em>Liskov substitution principle</em></li>
-                        <li><strong class="fragment highlight-red">I</strong> <em>Interface segregation principle</em></li>
-                        <li><strong class="fragment highlight-red">D</strong> <em>Dependency inversion principle</em></li>
+                        <li><strong class="fragment highlight-red">L</strong> <em>Liskov substitution principle</em>
+                        </li>
+                        <li><strong class="fragment highlight-red">I</strong> <em>Interface segregation principle</em>
+                        </li>
+                        <li><strong class="fragment highlight-red">D</strong> <em>Dependency inversion principle</em>
+                        </li>
                     </ul>
 
                     <div class="fragment" style="font-size: 60%;">
                         <a href="https://www.youtube.com/watch?v=IkMqG-dsD20">Software Craftsmanship Tidbit - Uncle Bob
                             Martin - Being Professional</a><br />
-                        <a href="">Coder Proprement</a>
+                        <a
+                            href="https://storage.i-run.fr/index.php/apps/files/?dir=/Service-Info/Ressources/Bouquins%20OReilly&fileid=480967#pdfviewer">Coder
+                            Proprement</a>
                     </div>
                     <aside class="notes">
                         <ul>
                             <li>une classe, une fonction ou une méthode doit avoir une et une seule responsabilité</li>
-                            <li>une classe doit être ouverte à l'extension, mais fermée à la modification</li>
+                            <li>Une classe, une méthode, un module doit pouvoir être étendu, supporter différentes
+                                implémentations (Open for extension)
+                                sans pour cela devoir être modifié (closed for modification).</li>
                             <li>une instance de type T doit pouvoir être remplacée par une instance de type G, tel que
                                 G sous-type de T,
                                 sans que cela ne modifie la cohérence du programme</li>
@@ -129,7 +144,7 @@
                     <em>l’architecture hexagonale à la rescousse...</em>
                 </section>
                 <section>
-                    <p>idée simple, isoler le métier des détails techniques de l’implémentation</p>
+                    <p>idée simple : isoler le métier des détails techniques de l’implémentation</p>
                     <img class="fragment" style="height: 400px" src="img/hexagonal/outside_inside1.png" />
                 </section>
                 <section>
@@ -146,11 +161,11 @@
                         <li class="fragment">pas d’accès réseau</li>
                         <li class="fragment">pas d’accès disque/IO</li>
                     </ul>
-                    <p class="fragment">Il ne doit JAMAIS y avoir dans le modèle de référence vers l’infrastructure</p>
+                    <p class="fragment">Il ne doit JAMAIS y avoir dans le domaine, de référence vers l’infrastructure</p>
                 </section>
                 <section>
                     <h3>Les Ports</h3>
-                    <p style="font-size:90%;">Le modèle expose des interfaces qui ont un sens métier.</p>
+                    <p style="font-size:90%;">Le domaine expose des interfaces qui ont un sens métier.</p>
                     <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;font-size: 70%;">
                         <figure class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
                             <img src="img/hexagonal/apis2.png" />
@@ -168,8 +183,10 @@
                     <div style="display: grid;grid-gap: 10px;">
                         <div class="fragment" style="grid-column: 1 / 2 span;grid-row: 1 / 2;">Si on change de base de
                             données, on change l’adaptateur et on ne touche pas au métier</div>
-                        <figure class="fragment" style="grid-column: 1 / 2;grid-row: 2 / 2;"><img src="img/hexagonal/dip1.png" /></figure>
-                        <figure class="fragment" style="grid-column: 2 / 2;grid-row: 2 / 2;"><img src="img/hexagonal/dip2.png" /></figure>
+                        <figure class="fragment" style="grid-column: 1 / 2;grid-row: 2 / 2;"><img
+                                src="img/hexagonal/dip1.png" /></figure>
+                        <figure class="fragment" style="grid-column: 2 / 2;grid-row: 2 / 2;"><img
+                                src="img/hexagonal/dip2.png" /></figure>
                     </div>
                     <aside class="notes">
                         <p>Pour les composants qui appellent notre métier, c’est facile. Ils n’ont qu’à contacter nos
@@ -186,14 +203,188 @@
                         <li class="fragment">Une capacité à livrer de la valeur rapidement</li>
                     </ul>
                     <aside class="notes">
-                        Au démarrage d’une application, l’usage de l’architecture hexagonale permet de démontrer
-                        rapidement puisque l’on ne dépend plus de contraintes extérieures comme l’infrastructure.
-                        On peut aisément remplacer une base de données par un fichier plat ou une application web par
-                        une ligne de commande et cela suffit amplement à proposer un MVP au bout du premier sprint. On
-                        repousse ainsi les choix techniques à plus tard, au moment où notre connaissance sera plus à
-                        même de faire un choix éclairé. Mieux, on se concentre sur le besoin client (le métier) et l’on
-                        accélère la boucle de feedback pour s’assurer que l’on se trouve sur la bonne voie.
+                        <ul>
+                            <li>Démarrage rapide, démo facile a atteindre puisque pas de dépendances extérieure</li>
+                            <li>On peut facilement remplacer une BDD par un fichier plat</li>
+                            <li>Les choix techniques sont repoussés au moment où on en sait plus</li>
+                            <li>On se concentre sur les besoins client (métier), feedback plus rapide</li>
+                        </ul>
                     </aside>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h3>Concrètement,</h3>
+                    <p class="fragment">Anatomie d’un projet maven<br />
+                        <img src="img/hexagonal/maven-logo.png" alt="" /></p>
+                    <p class="fragment" style="font-size: 0.7em;"><em>...au sein d’une architecture modulaire
+                            évolutive</em></p>
+                </section>
+                <section>
+                    <h3>Anatomie d’un module</h3>
+                    <h4>module-domain</h4>
+                    <ul>
+                        <li class="fragment">Contient toute la partie métier du code du module sous forme de services
+                        </li>
+                        <li class="fragment">Aucune dépendances de frameworks</li>
+                        <li class="fragment">Des dépendances d’outils comme guava, SLF4j, ...</li>
+                        <li class="fragment">Contient les interfaces de Ports</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Anatomie d’un module</h3>
+                    <h4>module-infra</h4>
+                    <ul>
+                        <li class="fragment">Peut dépendre des frameworks (Spring pour I-RUN)</li>
+                        <li class="fragment">Contient les adapters qui implémentent les Ports déclarés dans le domaine
+                        </li>
+                        <li class="fragment">
+                            <p>Contient la configuration qui permet d’injecter les Services du domaine</p>
+                            <pre><code class="java" style="font-size: 0.6em;line-height: 1em;">
+@Configuration
+public class ReviewConfiguration {
+
+    @Bean
+    ReviewService reviewService(ReviewDatabaseAccessPorts reviewConfigurationPersistencePort) {
+        return new ReviewServiceImpl(reviewConfigurationPersistencePort);
+    }
+}
+                                </code></pre>
+                        </li>
+                    </ul>
+                    <aside class="notes">
+                        <h4>A noter:</h4>
+                        <ul>
+                            <li>La configuration n'est pas le seul moyen de faire pour injecter les services</li>
+                            <li>On peut utiliser l’héritage avec l’annotation `@Service`</li>
+                            <li>Cela permet d’avoir un comportement plus fin que le `@Bean`</li>
+                            <li>Avec les traitements standard de Spring sur ces annotations</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <h3>Anatomie d’un module</h3>
+                    <p style="font-size: 0.7em;">Pour les besoins de notre architecture modulaire, deux autres
+                        sous-modules s’ajoutent au domaine et à l’infra.</p>
+                    <ul>
+                        <li class="fragment"><strong>module-api</strong>
+                            <p style="font-size: 0.7em;">C’est les classes d’API du module. Tout ce qui est visible
+                                depuis l’extérieur du module.
+                                Pas de logique, pas de code. Peu voire pas de dépendances (guava & reactor pour les
+                                Immutable et Flux).</p>
+                        </li>
+                        <li class="fragment"><strong>module-db</strong>
+                            <p style="font-size: 0.7em;">Qui contient le DSL si le module accède à une base de données
+                            </p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Anatomie d’un module</h3>
+                    <pre><code class="bash" style="font-size: 0.6em;line-height: 1.1em;">
+.
+├── pom.xml
+├── ${module}-api
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── fr.irun.${module}.api
+│   │   │   │       ├── exceptions 
+│   │   │   │       ├── model
+│   │   │   │       ├── Service1Api.java        # Interface des services implémenté dans le domaine
+│   │   │   │       └── Service2Api.java
+│   │   │   └── resources
+│   │   └── test
+│   │       ├── java
+│   │       │   └── fr.irun.${module}.api
+│   │       └── resources
+│   └── target
+├── ${module}-domain
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── fr.irun.${module}.domain  
+│   │   │   │       ├── exceptions              # Seulement les exceptions interne
+│   │   │   │       ├── model                   # Seulement les POJO interne
+│   │   │   │       ├── ports
+│   │   │   │       └── services
+│   │   │   └── resources
+│   │   └── test
+│   │       ├── java
+│   │       │   └── fr.irun.${module}.domain
+│   │       └── resources
+│   └── target
+└── ${module}-infra
+    ├── pom.xml
+    ├── src
+    │   ├── main
+    │   │   ├── java
+    │   │   │   └── fr.irun.${module}.infra
+    │   │   │       ├── components 
+    │   │   │       ├── config
+    │   │   │       ├── controllers
+    │   │   │       ├── listeners
+    │   │   │       ├── model
+    │   │   │       ├── persistence
+    │   │   │       └── services
+    │   │   └── resources
+    │   └── test
+    │       ├── java
+    │       │   └── fr.irun.${module}.infra
+    │       └── resources
+    └── target
+</code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Retour d’expérience</h2>
+                    <ul>
+                        <li>Comment ce type d’architecture a été accueillie au sein d’I-RUN ?</li>
+                        <li>Quels ont été les difficultés ?</li>
+                        <li>Qu’est-ce qu’on en a tiré ?</li>
+                        <li>Si c’était à refaire ?</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Retour d’expérience: Au début</h3>
+                    <ul>
+                        <li>Présentations</li>
+                        <li>Séances de Mob programming</li>
+                        <li>Sentiment d’over-engineering</li>
+                        <li>Équipe de développeurs sceptique</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Retour d’expérience: Difficultés</h3>
+                    <ul>
+                        <li>Compliqué de séparer le domaine de l’infra conceptuellement</li>
+                        <li>Sur les premiers dev le domaine ne fait que passe-plat entre Controllers et Ports</li>
+                        <li>Revues laborieuses</li>
+                        <li>Dépassement des délais estimés</li>
+                        <li>Suivi serré des développements nécessaires</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Retour d’expérience: Avantages</h3>
+                    <ul>
+                        <li>Cadre bien défini et clair</li>
+                        <li>Facilité à faire évoluer le code</li>
+                        <li>Facilité à tester le code</li>
+                        <li>Relativement simple à mettre en place avec Spring</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Retour d’expérience: Aujourd’hui</h3>
+                    <ul>
+                        <li>Un module complexe développé selon l’archi Hexagonale</li>
+                        <li>Module intégré au legacy I-RUN (WebApp Tomcat)</li>
+                        <li>Des évolutions développées simplement, dans les délais et sans régression</li>
+                        <li>Une équipe conquise par cette architecture</li>
+                        <li>L’équipe front met en place une architecture similaire</li>
+                    </ul>
                 </section>
             </section>
             <section>
@@ -203,13 +394,13 @@
                         <li class="fragment">Isolation du métier</li>
                         <li class="fragment">pas d’infra dans le domaine</li>
                         <li class="fragment">des interfaces avec du sens métier</li>
-                        <li class="fragment">privilégier les type fort au String</li>
+                        <li class="fragment">privilégier les types fort au String</li>
                         <li class="fragment">pas d’infra dans le domaine</li>
                     </ul>
                     <figure style="grid-column: 2 / 2;grid-row: 1;">
                         <img src="img/hexagonal/clean-architecture.png" />
                     </figure>
-                <div>
+                    <div>
             </section>
         </div>
     </div>
