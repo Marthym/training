@@ -8,7 +8,7 @@
     <title>Architecture Hexagonale</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/irun.css">
+    <link rel="stylesheet" href="_themes/runstoppable/style.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -26,7 +26,7 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <section>
+            <section data-background="img/hexagonal/01-background.jpg">
                 <h1>Architecture Hexagonale</h1>
                 <aside class="notes">
                     <p>L’objectif ici n’est pas de vendre l’architecture Hexagonale comme la solution ultime à tous les
@@ -37,103 +37,33 @@
             </section>
 
             <section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## Les difficultés de la modélisation
-
-                        * Choix techniques précipités
-                        * Immobilisme technique
-                        * Testabilité compliquée et mal dirigée
-
-                        Notes:
-
-                        1. Des choix techniques fait en début de projet, au moment où l’on a le moins de connaissance,
-                            Un contexte qui fait qu’il faut prendre des décisions rapidement
-                        2. Il est difficile de changer les choix techniques une fois qu’ils sont faits, nécessité de retester tout un ensemble
-                            technique, cela induit des risques de régression. <br>
-                            Plus l’application grandit plus les modifications techniques sont lourdes et complexes
-                        3. Le fait que le métier et l’infra logicielle soit confondus et fortement couplés induit une testabilité réduite. Les tests 
-                            sont souvent longs à s’exécuter et compliqués à mettre en place à cause du grand nombre de prérequis des dépendances d’infra.
-                    </script>
-                </section>
                 <section>
-                    <h2>Architecture en Couches</h2>
-                    <div style="display: grid;grid-gap: 10px;">
-                        <div class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
-                            <img src="img/hexagonal/couches.png" />
+
+                    <div class="illustrated-right">
+                        <div class="illustration">
+                            <img src="img/hexagonal/pasta-architecture.png" alt="pasta" />
                         </div>
-                        <div style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
+                        <div class="text-content">
+                            <h2>Les difficultés de la modélisation</h2>
+
                             <ul>
-                                <li class="fragment">Généralement les couches supérieures ne connaissent pas les
-                                    implémentations des couches inférieures</l i>
-                                <li class="fragment">Intuitivement, on pourrait penser que la logique métier se trouve
-                                    dans la couche service</li>
-                                <li class="fragment">Mais, généralement le métier est dispersé entre la couche
-                                    service et persistance</li>
+                                <li>Choix techniques précipités</li>
+                                <li>Immobilisme technique</li>
+                                <li>Testabilité compliquée et mal dirigée</li>
                             </ul>
                         </div>
                     </div>
                     <aside class="notes">
-                        <p>Généralement la couche service ne contient que des services sans état, qui manipulent des
-                            Entités issues de la couche
-                            de persistance</p>
-                        <p>Selon les frameworks, les Entités de la couche de persistance sont couvertes d’annotations
-                            qui induisent des dépendances.</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>Les principes SOLID</h2>
-                    <ul>
-                        <li><strong class="fragment highlight-red">S</strong> <em>Single responsability principe</em>
-                        </li>
-                        <li><strong class="fragment highlight-red">O</strong> <em>Open/closed principe</em></li>
-                        <li><strong class="fragment highlight-red">L</strong> <em>Liskov substitution principle</em>
-                        </li>
-                        <li><strong class="fragment highlight-red">I</strong> <em>Interface segregation principle</em>
-                        </li>
-                        <li><strong class="fragment highlight-red">D</strong> <em>Dependency inversion principle</em>
-                        </li>
-                    </ul>
-
-                    <div class="fragment" style="font-size: 60%;">
-                        <a href="https://www.youtube.com/watch?v=IkMqG-dsD20">Software Craftsmanship Tidbit - Uncle Bob
-                            Martin - Being Professional</a><br />
-                        <a
-                            href="https://storage.i-run.fr/index.php/apps/files/?dir=/Service-Info/Ressources/Bouquins%20OReilly&fileid=480967#pdfviewer">Coder
-                            Proprement</a>
-                    </div>
-                    <aside class="notes">
-                        <ul>
-                            <li>une classe, une fonction ou une méthode doit avoir une et une seule responsabilité</li>
-                            <li>Une classe, une méthode, un module doit pouvoir être étendu, supporter différentes
-                                implémentations (Open for extension)
-                                sans pour cela devoir être modifié (closed for modification).</li>
-                            <li>une instance de type T doit pouvoir être remplacée par une instance de type G, tel que
-                                G sous-type de T,
-                                sans que cela ne modifie la cohérence du programme</li>
-                            <li>préférer plusieurs interfaces spécifiques pour chaque client plutôt qu'une seule
-                                interface générale</li>
-                            <li>il faut dépendre des abstractions, pas des implémentations</li>
-                        </ul>
-                        <p>SOLID est un acronyme représentant cinq principes de bases pour la programmation orientée
-                            objet,
-                            introduits par Michael Feathers et Robert C. Martin au début des années 2000</p>
-                    </aside>
-                </section>
-                <section>
-                    <h3>Principe d’inversion des dépendances</h3>
-                    <div style="display: grid;grid-gap: 10px;">
-                        <div class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
-                            <img src="img/hexagonal/normal-dependencies.png" />
-                        </div>
-                        <div class="fragment" style="grid-column: 2 / 2;grid-row: 1;font-size:60%;">
-                            <img src="img/hexagonal/inversed-dependencies.png" />
-                        </div>
-                    </div>
-                    <aside class="notes">
-                        <p>Grace à ça, A et B peuvent être déployés séparément.</p>
-                        <p>B vient se brancher à A</p>
-                        <p>A peut avoir plusieurs dépendances de ce genre</p>
+                        <p>Quelques soit le modèle utilisé, les pronlèmes sont réccurent.</p>
+                        <ol>
+                            <li>Des choix techniques fait en début de projet, au moment où l’on a le moins de
+                                connaissance et un contexte qui pousse à prendre des décisions rapidement.</li>
+                            <li>Il est difficile de revenir sur certains choix techniques. Plus le projet avance, plus le retour est 
+                                compliqué.</li>
+                            <li>Sur le modèle en couche, on retrouve soivent les couches de service confondu dans avec les couches de 
+                                persistence.</li>
+                            <li>L’entrelat des couches métier, persistance et infra induit des tests d’intégration compliqué.</li>
+                        </ol>
                     </aside>
                 </section>
             </section>
@@ -145,7 +75,7 @@
                 </section>
                 <section>
                     <p>idée simple : isoler le métier des détails techniques de l’implémentation</p>
-                    <img class="fragment" style="height: 400px" src="img/hexagonal/outside_inside1.png" />
+                    <img class="fragment" style="height: 400px" src="img/hexagonal/hexagonal-01.svg" />
                 </section>
                 <section>
                     <p>le métier ne dépend de rien</p>
@@ -161,7 +91,8 @@
                         <li class="fragment">pas d’accès réseau</li>
                         <li class="fragment">pas d’accès disque/IO</li>
                     </ul>
-                    <p class="fragment">Il ne doit JAMAIS y avoir dans le domaine, de référence vers l’infrastructure</p>
+                    <p class="fragment">Il ne doit JAMAIS y avoir dans le domaine, de référence vers l’infrastructure
+                    </p>
                 </section>
                 <section>
                     <h3>Les Ports</h3>
@@ -405,7 +336,6 @@ public class ReviewConfiguration {
         </div>
     </div>
 
-    <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
 
     <script>
@@ -418,13 +348,17 @@ public class ReviewConfiguration {
             history: true,
             center: true,
 
+            width: "80%",
+
             transition: 'slide', // none/fade/slide/convex/concave/zoom
 
             dependencies: [
-                { src: 'plugin/markdown/marked.js' },
-                { src: 'plugin/markdown/markdown.js' },
-                { src: 'plugin/notes/notes.js', async: true },
-                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true },
+                { src: 'plugin/search/search.js', async: true },
+                { src: 'plugin/zoom-js/zoom.js', async: true },
+                { src: 'plugin/notes/notes.js', async: true }
             ]
         });
     </script>
