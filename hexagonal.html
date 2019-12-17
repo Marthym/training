@@ -55,24 +55,22 @@
             </section>
 
             <section>
-                <section>
-
-                    <div class="illustrated-right">
-                        <div class="illustration">
-                            <img src="img/hexagonal/pasta-architecture.png" alt="pasta" />
-                        </div>
-                        <div class="text-content">
-                            <h2>Les difficultés de la modélisation</h2>
-
-                            <ul>
-                                <li>Choix techniques précipités</li>
-                                <li>Immobilisme technique</li>
-                                <li>Testabilité compliquée et mal dirigée</li>
-                            </ul>
-                        </div>
+                <section class="illustrated-right">
+                
+                    <div class="illustration">
+                        <img src="img/hexagonal/pasta-architecture.png" alt="pasta" />
+                    </div>
+                    <div class="text-content">
+                        <h2>Les difficultés de la modélisation</h2>
+                
+                        <ul>
+                            <li>Choix techniques précipités</li>
+                            <li>Immobilisme technique</li>
+                            <li>Testabilité compliquée et mal dirigée</li>
+                        </ul>
                     </div>
                     <aside class="notes">
-                        <p>Quelques soit le modèle utilisé, les pronlèmes sont réccurent.</p>
+                        <p>Que ce soit pour les modèles "spaghetti", en couche ou micro-service, les problèmes sont réccurent.</p>
                         <ol>
                             <li>Des choix techniques fait en début de projet, au moment où l’on a le moins de
                                 connaissance et un contexte qui pousse à prendre des décisions rapidement.</li>
@@ -89,43 +87,45 @@
                 </section>
                 <section>
                     <img src="img/hexagonal/superhexa.png" alt="superhexa" style="position:fixed;bottom:10px;" />
-                    <p><em>l’architecture hexagonale à la rescousse...</em></p>
+                    <h3>l’architecture hexagonale</h3> <p><em>à la rescousse...</em></p>
+                    <aside class="notes">
+                        <p>L’archi hexagonale ne va pas solutionner tous les problèmes, elle offre juste des alternatives qui dans certains cas
+                        vont aider les décisions ou la maintenance.</p>
+                        <p>Elle ne remplace pas les modèles micro-service mais elle vient le complèter.</p>
+                    </aside>
                 </section>
                 <section>
-                    <p>idée simple : isoler le métier des détails techniques de l’implémentation</p>
-                    <img class="fragment" style="height: 400px" src="img/hexagonal/hexagonal-01.svg" />
+                    <p>isoler le métier des détails techniques de l’implémentation</p>
                 </section>
                 <section>
-                    <p>le métier ne dépend de rien</p>
-                    <img class="fragment" style="height: 300px" src="img/hexagonal/adapters2.png" />
-                    <p class="fragment">toutes les dépendances vont de l’extérieur vers l’intérieur</p>
-                    <p class="fragment">une couche d’adaptation fait le lien entre les mondes</p>
-                </section>
-                <section>
-                    <h3>Un modèle agnostique</h3>
+                    <h4>Un domaine métier agnostique</h4>
                     <ul>
                         <li class="fragment">pas de framework</li>
                         <li class="fragment">pas de base de données</li>
                         <li class="fragment">pas d’accès réseau</li>
                         <li class="fragment">pas d’accès disque/IO</li>
                     </ul>
-                    <p class="fragment">Il ne doit JAMAIS y avoir dans le domaine, de référence vers l’infrastructure
-                    </p>
+                    <p class="fragment">Il ne doit JAMAIS y avoir dans le domaine, de référence vers l’infrastructure</p>
                 </section>
-                <section>
-                    <h3>Les Ports</h3>
-                    <p style="font-size:90%;">Le domaine expose des interfaces qui ont un sens métier.</p>
-                    <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;font-size: 70%;">
-                        <figure class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
-                            <img src="img/hexagonal/apis2.png" />
-                            <figcaption>Application Provider Interfaces</figcaption>
-                        </figure>
-                        <figure class="fragment" style="grid-column: 2 / 2;grid-row:1;">
-                            <img src="img/hexagonal/spis1.png" />
-                            <figcaption>Service Provider Interfaces</figcaption>
-                        </figure>
-                    </div>
-                    <p class="fragment">Ces interfaces faisant partie du domaine, elles doivent avoir un sens métier</p>
+                <section class="illustrated-right">
+                        <div class="illustration">
+                            <img src="img/hexagonal/les-ports.png" alt="ports" />
+                        </div>
+                        <div class="text-content">
+                            <h3>Les Ports</h3>
+                            <p style="font-size:90%;">Le domaine expose des interfaces qui ont un sens métier.</p>
+                            <div style="display: grid;grid-auto-columns: 50%;grid-gap: 10px;font-size: 70%;">
+                                <figure class="fragment" style="grid-column: 1 / 2;grid-row: 1;">
+                                    <img src="img/hexagonal/apis2.png" />
+                                    <figcaption>Application Provider Interfaces</figcaption>
+                                </figure>
+                                <figure class="fragment" style="grid-column: 2 / 2;grid-row:1;">
+                                    <img src="img/hexagonal/spis1.png" />
+                                    <figcaption>Service Provider Interfaces</figcaption>
+                                </figure>
+                            </div>
+                            <p class="fragment">Ces interfaces faisant partie du domaine, elles doivent avoir un sens métier</p>
+                        </div>
                 </section>
                 <section>
                     <h3>Une infra qui s’adapte</h3>
