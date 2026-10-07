@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="Frédéric Combes">
+    <meta name="description" content="Retour d’expérience sur l’utilisation de Logseq comme second cerveau.">
+    <title>Se construire un second cerveau avec Logseq</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="_themes/logseq-second-brain/style.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section id="titre" class="cover">
+            <span class="eyebrow">Retour d’expérience</span>
+            <h1>Se construire un<br><span class="accent">second cerveau</span><br>avec Logseq</h1>
+            <p class="promise">Tout noter. Retrouver l’information au bon moment.</p>
+            <span class="orbit-line"></span>
+            <span class="orbit"></span>
+            <div class="deck-footer"><span>Frédéric Combes · Look Up</span><span>1</span></div>
+            <aside class="notes">
+                <p>Je vais vous parler d’un outil que j’utilise tous les jours. Mais surtout d’une organisation qui me permet de passer du code au management, puis à une réunion de direction, sans garder quinze rappels dans la tête.</p>
+                <p>Je ne cherche pas à vous vendre Logseq. Je vais vous montrer mon système, ses règles et ses limites. Vous pourrez reprendre les morceaux qui vous servent.</p>
+            </aside>
+        </section>
+
+        <section id="presentation">
+            <div class="bio-grid">
+                <div class="portrait-placeholder"><img src="img/logseq-second-brain/frederic-combes.webp" alt="Frédéric Combes"></div>
+                <div>
+                    <span class="eyebrow">Bonjour</span>
+                    <h2>Frédéric Combes</h2>
+                    <p class="subtitle">Head of Software chez Look Up</p>
+                    <p>Développeur depuis 25 ans.<br>Manager depuis 8.<br>Toujours autant de choses à retenir.</p>
+                    <span class="brand-badge"><img src="img/logseq-second-brain/lookup-logo.png" alt="Look Up"></span>
+                    <div class="social-links">
+                        <a href="https://github.com/Marthym">github.com/Marthym</a><br>
+                        <a href="https://www.linkedin.com/in/combesfrederic/">linkedin.com/in/combesfrederic</a><br>
+                        <a href="https://blog.ght1pc9kc.fr/">blog.ght1pc9kc.fr</a>
+                    </div>
+                </div>
+            </div>
+            <div class="deck-footer"><span>Qui parle ?</span><span>2</span></div>
+            <aside class="notes">
+                <p>Je m’appelle Frédéric. Je suis Head of Software chez Look Up. Nous fabriquons des radars et le logiciel qui permet de surveiller l’espace et de planifier le tasking des radars.</p>
+                <p>J’ai commencé comme développeur et je code encore. Mon quotidien mélange donc architecture, production, management, recrutement et réunions. Le problème n’est pas de trouver de quoi m’occuper. Le problème est de reprendre le bon sujet au bon moment.</p>
+            </aside>
+        </section>
+
+        <section id="journee-normale">
+            <span class="eyebrow">Une journée normale</span>
+            <h2>Le contexte change toutes les heures</h2>
+            <div class="day-grid">
+                <div class="day-card"><span class="time">09:00</span>Le daily remonte un bug dans l’API de tasking.</div>
+                <div class="day-card"><span class="time">10:30</span>Un one-to-one dérive sur les revues de code.</div>
+                <div class="day-card"><span class="time">14:00</span>Starlink-35956 se fragmente. Il faut revoir le tasking radar.</div>
+                <div class="day-card"><span class="time">17:00</span>La direction attend un point sur les recrutements.</div>
+            </div>
+            <div class="deck-footer"><span>Code · équipe · opérations</span><span>3</span></div>
+            <aside class="notes">
+                <p>Une journée ressemble à ça. Le matin, un sujet de dev. Ensuite un one-to-one. Après déjeuner, un événement orbital change les priorités. En fin de journée, il reste le point de direction à préparer.</p>
+                <p>Chaque interruption arrive avec une information à retenir. Si je la garde en mémoire, je la répète mentalement jusqu’au soir. Si je la classe dans un outil compliqué, je passe plus de temps à choisir une case qu’à écrire la note.</p>
+            </aside>
+        </section>
+
+        <section id="journal">
+            <div class="split">
+                <div>
+                    <span class="eyebrow">Une seule porte d’entrée</span>
+                    <h2>Je note tout dans le journal</h2>
+                    <div class="code-block">
+                        - <span class="task">TODO [#A]</span> Faire relire l’API de <span class="tag">#radar-tasking</span><br>
+                        &nbsp;&nbsp;par <span class="link">[[👤 Contacts/Camille Morel]]</span>
+                    </div>
+                    <p class="subtitle">Je capture d’abord. Je traite ensuite.</p>
+                </div>
+                <div class="capture-frame">
+                    <img src="img/logseq-second-brain/01-journal.png" alt="Journal Logseq du 17 décembre avec la page Contents ouverte dans le panneau droit">
+                </div>
+            </div>
+            <div class="deck-footer"><span>Le journal reste la page d’accueil</span><span>4</span></div>
+            <aside class="notes">
+                <p>Je n’ouvre pas une page projet. Je ne cherche pas un dossier. J’écris dans le journal du jour. Toutes mes notes actionnables commencent comme des tâches.</p>
+                <p>Je leur donne une priorité haute au moment de la capture, sauf quand il s’agit d’un rappel pour une personne ou une réunion. La liste de tâches reste visible dans le panneau droit. J’ai donc mon contexte du jour au centre et mon radar personnel à droite.</p>
+            </aside>
+        </section>
+
+        <section id="contexte">
+            <span class="eyebrow">Deux conventions</span>
+            <h2>Le contexte fait le classement</h2>
+            <div class="context-grid">
+                <div class="context-card">
+                    <span class="symbol">#sujet</span>
+                    <h3>Pour un thème</h3>
+                    <p><code>#radar-tasking</code>, <code>#catalogue-orbital</code>, <code>#dette-technique</code></p>
+                </div>
+                <div class="context-card">
+                    <span class="symbol">[[lien]]</span>
+                    <h3>Pour une personne ou un événement</h3>
+                    <p><code>[[👤 Contacts/Camille Morel]]</code><br><code>[[📝 Notes/Point opérations radar]]</code></p>
+                </div>
+            </div>
+            <p class="subtitle">Le backlink range la note sans la déplacer.</p>
+            <div class="deck-footer"><span>Tags pour les sujets · liens pour le reste</span><span>5</span></div>
+            <aside class="notes">
+                <p>J’ajoute un tag quand la tâche concerne un sujet. J’ajoute un lien quand elle concerne une personne ou une réunion. Je n’ai besoin que de ces deux conventions.</p>
+                <p>La note reste dans le journal. Logseq affiche ensuite le backlink sur chaque page citée. Je ne recopie rien. Je ne maintiens pas plusieurs listes. Le contexte ajouté pendant la capture suffit à faire remonter la note là où je vais en avoir besoin.</p>
+            </aside>
+        </section>
+
+        <section id="contents">
+            <div class="split">
+                <div>
+                    <span class="eyebrow">Toujours à droite</span>
+                    <h2><code>Contents</code> garde la liste sous mes yeux</h2>
+                    <div class="priority-list">
+                        <div class="priority a"><span class="badge">A</span><span>Urgent et important</span></div>
+                        <div class="priority b"><span class="badge">B</span><span>Important</span></div>
+                        <div class="priority c"><span class="badge">C</span><span>Quand j’ai le temps</span></div>
+                        <div class="priority none"><span class="badge">·</span><span>Pour rappel</span></div>
+                    </div>
+                </div>
+                <div class="capture-frame">
+                    <img src="img/logseq-second-brain/02-contents.png" alt="Page Contents de Logseq avec les tâches en cours et les priorités">
+                </div>
+            </div>
+            <div class="deck-footer"><span>Une query par niveau de priorité</span><span>6</span></div>
+            <aside class="notes">
+                <p>La page Contents contient des queries. La première affiche ce qui est en cours. Les suivantes regroupent les TODO par priorité. La dernière récupère les TODO sans priorité, ceux que je veux revoir avec quelqu’un ou pendant une réunion.</p>
+                <p>Cette page reste ouverte dans le panneau droit. Je la parcours au moins une fois par jour, souvent davantage. Je peux continuer à travailler dans le journal sans perdre de vue les sujets en cours.</p>
+            </aside>
+        </section>
+
+        <section id="priorites">
+            <span class="eyebrow">La réalité décide</span>
+            <h2>Une tâche qui n’avance pas descend</h2>
+            <div class="decay">
+                <div class="decay-step a"><strong>A</strong>urgent</div><div class="decay-arrow">→</div>
+                <div class="decay-step b"><strong>B</strong>important</div><div class="decay-arrow">→</div>
+                <div class="decay-step c"><strong>C</strong>un jour</div><div class="decay-arrow">→</div>
+                <div class="decay-step none"><strong>·</strong>rappel</div>
+            </div>
+            <p class="subtitle">Si je reporte une tâche chaque jour, son urgence était probablement imaginaire.</p>
+            <div class="deck-footer"><span>La priorité se révise</span><span>7</span></div>
+            <aside class="notes">
+                <p>Au moment où je capture une tâche, tout paraît urgent. Ensuite la réalité me donne une information plus fiable. Une tâche reste plusieurs jours en priorité haute sans que je la traite ? Je baisse sa priorité.</p>
+                <p>Les gestionnaires classiques font souvent monter l’urgence avec le temps. Mon système permet aussi de la faire descendre. Je préfère reconnaître une mauvaise estimation plutôt que conserver une liste rouge qui finit par ne plus rien vouloir dire.</p>
+            </aside>
+        </section>
+
+        <section id="one-to-one">
+            <div class="split">
+                <div>
+                    <span class="eyebrow">Avant un one-to-one</span>
+                    <h2>La fiche contact prépare la discussion</h2>
+                    <div class="code-block">
+                        - TODO Voir avec<br>
+                        &nbsp;&nbsp;<span class="link">[[👤 Contacts/Camille Morel]]</span><br>
+                        &nbsp;&nbsp;comment fluidifier les revues de code
+                    </div>
+                    <p class="subtitle">Les références liées forment l’historique.</p>
+                </div>
+                <div class="capture-frame">
+                    <img src="img/logseq-second-brain/03-contact.png" alt="Fiche contact Camille Morel et ses références liées dans Logseq">
+                </div>
+            </div>
+            <div class="deck-footer"><span>Les rappels sans priorité arrivent au bon moment</span><span>8</span></div>
+            <aside class="notes">
+                <p>Je pense à un sujet pour Camille pendant une autre réunion. Je l’écris dans le journal, sans priorité, avec un lien vers sa fiche. Mon cerveau peut passer à autre chose.</p>
+                <p>Quand le one-to-one commence, j’ouvre la fiche de Camille. Les références liées me montrent tout ce que je voulais aborder et l’historique de nos échanges. Je coche la tâche quand nous avons traité le sujet. Je n’ai pas préparé un ordre du jour séparé.</p>
+            </aside>
+        </section>
+
+        <section id="reunion">
+            <div class="split">
+                <div class="capture-frame">
+                    <img src="img/logseq-second-brain/04-meeting.png" alt="Page Point opérations radar avec les tâches liées et Contents dans le panneau droit">
+                </div>
+                <div>
+                    <span class="eyebrow">Avant une réunion</span>
+                    <h2>La page devient l’ordre du jour</h2>
+                    <div class="code-block">
+                        - TODO Vérifier la couverture disponible<br>
+                        &nbsp;&nbsp;pendant <span class="link">[[📝 Notes/Point opérations radar]]</span>
+                    </div>
+                    <p class="subtitle">Après quelques semaines, elle contient aussi la mémoire de la réunion.</p>
+                </div>
+            </div>
+            <div class="deck-footer"><span>La même mécanique pour les événements</span><span>9</span></div>
+            <aside class="notes">
+                <p>Les réunions fonctionnent comme les contacts. Dès qu’un sujet doit attendre le prochain point opérations radar, je lie la tâche à cette page.</p>
+                <p>Au début de la réunion, j’ouvre la page et je retrouve les sujets en attente. Les notes prises pendant la réunion repartent dans le journal avec le même lien. La page accumule donc un historique sans que je rédige un compte rendu dans un second endroit.</p>
+            </aside>
+        </section>
+
+        <section id="deadline">
+            <span class="eyebrow">Chacun son métier</span>
+            <h2>Logseq garde le contexte.<br>Outlook réserve le temps.</h2>
+            <div class="tool-split">
+                <div class="tool-card logseq">
+                    <h3>Logseq</h3>
+                    <p><code>DEADLINE</code> sur la tâche, les notes et tout le contexte accumulé.</p>
+                </div>
+                <div class="tool-card outlook">
+                    <h3>Outlook</h3>
+                    <p>Un créneau de travail avant l’échéance quand la date compte vraiment.</p>
+                </div>
+            </div>
+            <div class="deck-footer"><span>Un second cerveau n’est pas une alarme</span><span>10</span></div>
+            <aside class="notes">
+                <p>Logseq n’est pas mon système de rappel. Une tâche avec une date reçoit une deadline. Si cette date impose du travail, je bloque aussi un créneau dans Outlook avant l’échéance.</p>
+                <p>Je ne demande pas à Logseq de remplacer mon calendrier. Il conserve la tâche, son origine et les personnes concernées. Outlook sait me dire quand m’arrêter pour travailler dessus. Deux outils, deux responsabilités claires.</p>
+            </aside>
+        </section>
+
+        <section id="recette">
+            <span class="eyebrow">Le système complet</span>
+            <h2>Quatre habitudes suffisent</h2>
+            <div class="rules">
+                <div class="rule"><strong>Capturer</strong>Tout part dans le journal.</div>
+                <div class="rule"><strong>Contextualiser</strong>Un tag ou un lien suffit.</div>
+                <div class="rule"><strong>Relire</strong><code>Contents</code> reste ouvert à droite.</div>
+                <div class="rule"><strong>Planifier</strong>Outlook prend le relais pour les échéances.</div>
+            </div>
+            <p class="subtitle">Commencez petit. Le système grandira quand un besoin apparaîtra.</p>
+            <div class="deck-footer"><span>Pas de méthode à apprendre par cœur</span><span>11</span></div>
+            <aside class="notes">
+                <p>Vous pouvez repartir avec quatre habitudes. Écrire dans le journal. Ajouter un tag ou un lien. Garder une vue des tâches sous les yeux. Réserver du temps ailleurs quand une échéance l’exige.</p>
+                <p>Mon graphe a grandi avec mes besoins. Je n’ai pas commencé avec cinquante templates et des queries de trois pages. Chaque règle doit résoudre un problème que vous rencontrez déjà. Sinon elle deviendra une corvée et vous abandonnerez l’outil.</p>
+            </aside>
+        </section>
+
+        <section id="conclusion" class="closing">
+            <span class="eyebrow">À vous de jouer</span>
+            <h2>Vous pouvez arrêter<br>de vous souvenir de tout.</h2>
+            <div class="closing-links">
+                <a href="https://github.com/Marthym">GitHub</a>
+                <a href="https://www.linkedin.com/in/combesfrederic/">LinkedIn</a>
+                <a href="https://blog.ght1pc9kc.fr/">Blog</a>
+            </div>
+            <div class="deck-footer"><span>Questions ?</span><span>12</span></div>
+            <aside class="notes">
+                <p>Le résultat tient dans une phrase : je note une information une fois, puis le contexte la ramène au moment où j’en ai besoin.</p>
+                <p>Vous pouvez tester ce fonctionnement demain avec un journal, une page contact et une liste de tâches. Ajoutez le reste quand vous en ressentirez le manque. Et pour une fois dans une conférence tech, aucun chatbot n’a besoin de vous rappeler quoi que ce soit.</p>
+            </aside>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="dist/plugin/search.js"></script>
+<script src="dist/plugin/zoom.js"></script>
+<script src="dist/plugin/notes.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: false,
+        width: 1280,
+        height: 720,
+        margin: 0,
+        transition: 'slide',
+        plugins: [RevealSearch, RevealZoom, RevealNotes]
+    });
+</script>
+</body>
+</html>
