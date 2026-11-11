@@ -21,7 +21,7 @@
             <span class="orbit"></span>
             <div class="deck-footer"><span>Frédéric Combes · Look Up</span><span>1</span></div>
             <aside class="notes">
-                <p>Je vais vous parler d’un outil que j’utilise tous les jours. Mais surtout d’une organisation qui me permet de passer du code au management, puis à une réunion de direction, sans garder quinze rappels dans la tête.</p>
+                <p>Je vais vous parler d’un outil que j’utilise tous les jours. Mais surtout d’une organisation qui me permet de sauter d’un sujet à l’autre et d’une réunion à la suivante, sans m’y perdre et sans avoir à garder en tête chaque détail de la journée.</p>
                 <p>Je ne cherche pas à vous vendre Logseq. Je vais vous montrer mon système, ses règles et ses limites. Vous pourrez reprendre les morceaux qui vous servent.</p>
             </aside>
         </section>
@@ -53,15 +53,19 @@
             <span class="eyebrow">Une journée normale</span>
             <h2>Le contexte change toutes les heures</h2>
             <div class="day-grid">
-                <div class="day-card"><span class="time">09:00</span>Le daily remonte un bug dans l’API de tasking.</div>
-                <div class="day-card"><span class="time">10:30</span>Un one-to-one dérive sur les revues de code.</div>
-                <div class="day-card"><span class="time">14:00</span>Starlink-35956 se fragmente. Il faut revoir le tasking radar.</div>
-                <div class="day-card"><span class="time">17:00</span>La direction attend un point sur les recrutements.</div>
+                <div class="day-card"><span class="time">09:00</span>Daily : Celestrak ne fournit plus d’orbites à cause d’une faille PHP.</div>
+                <div class="day-card"><span class="time">10:00</span>One-to-one : suivre l’onboarding de François.</div>
+                <div class="day-card"><span class="time">11:00</span>Point archi : refactorisation de l’ingestion des orbites.</div>
+                <div class="day-card"><span class="time">13:00</span>Point release : préparer la sortie pour la fin de semaine.</div>
+                <div class="day-card"><span class="time">14:00</span>Revoir les priorités du prochain sprint pour un nouveau prospect.</div>
+                <div class="day-card"><span class="time">15:00</span>Starlink-35956 se fragmente : revoir le tasking radar.</div>
+                <div class="day-card"><span class="time">16:00</span>Point projet Erebos : comprendre le retard et revoir le planning.</div>
+                <div class="day-card"><span class="time">17:00</span>Préparer le reporting hebdomadaire à la direction.</div>
             </div>
             <div class="deck-footer"><span>Code · équipe · opérations</span><span>3</span></div>
             <aside class="notes">
-                <p>Une journée ressemble à ça. Le matin, un sujet de dev. Ensuite un one-to-one. Après déjeuner, un événement orbital change les priorités. En fin de journée, il reste le point de direction à préparer.</p>
-                <p>Chaque interruption arrive avec une information à retenir. Si je la garde en mémoire, je la répète mentalement jusqu’au soir. Si je la classe dans un outil compliqué, je passe plus de temps à choisir une case qu’à écrire la note.</p>
+                <p>Une journée ressemble à ça. J’enchaîne les réunions et les sujets, avec des imprévus qui changent les priorités. À chaque fois, il faut reprendre le contexte et savoir où j’en suis.</p>
+                <p>Chaque interruption apporte une nouvelle info. Je n’ai pas le temps de réfléchir à l’endroit où la ranger, et je ne peux pas tout garder en tête jusqu’à la fin de la journée.</p>
             </aside>
         </section>
 
@@ -74,7 +78,7 @@
                         - <span class="task">TODO [#A]</span> Faire relire l’API de <span class="tag">#radar-tasking</span><br>
                         &nbsp;&nbsp;par <span class="link">[[👤 Contacts/Camille Morel]]</span>
                     </div>
-                    <p class="subtitle">Je capture d’abord. Je traite ensuite.</p>
+                    <p class="subtitle">Je note et j’oublie.</p>
                 </div>
                 <div class="capture-frame">
                     <img src="img/logseq-second-brain/01-journal.png" alt="Journal Logseq du 17 décembre avec la page Contents ouverte dans le panneau droit">
@@ -228,7 +232,7 @@
             <div class="deck-footer"><span>Pas de méthode à apprendre par cœur</span><span>11</span></div>
             <aside class="notes">
                 <p>Vous pouvez repartir avec quatre habitudes. Écrire dans le journal. Ajouter un tag ou un lien. Garder une vue des tâches sous les yeux. Réserver du temps ailleurs quand une échéance l’exige.</p>
-                <p>Mon graphe a grandi avec mes besoins. Je n’ai pas commencé avec cinquante templates et des queries de trois pages. Chaque règle doit résoudre un problème que vous rencontrez déjà. Sinon elle deviendra une corvée et vous abandonnerez l’outil.</p>
+                <p>Il existe deux versions de Logseq : OG, qui stocke les notes dans des fichiers Markdown, et DB, qui utilise une base SQLite. J’utilise OG pour synchroniser mes fichiers avec Git et pouvoir les chiffrer avec git-crypt.</p>
             </aside>
         </section>
 
@@ -243,7 +247,7 @@
             <div class="deck-footer"><span>Questions ?</span><span>12</span></div>
             <aside class="notes">
                 <p>Le résultat tient dans une phrase : je note une information une fois, puis le contexte la ramène au moment où j’en ai besoin.</p>
-                <p>Vous pouvez tester ce fonctionnement demain avec un journal, une page contact et une liste de tâches. Ajoutez le reste quand vous en ressentirez le manque. Et pour une fois dans une conférence tech, aucun chatbot n’a besoin de vous rappeler quoi que ce soit.</p>
+                <p>Vous pouvez tester ce fonctionnement demain avec un journal, une page contact et une liste de tâches. Ajoutez le reste quand vous en ressentirez le manque.</p>
             </aside>
         </section>
     </div>
