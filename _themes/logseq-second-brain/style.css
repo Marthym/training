@@ -326,7 +326,7 @@ body {
 .context-grid {
     display: grid;
     gap: 24px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: 42px;
 }
 
@@ -345,6 +345,10 @@ body {
     font-weight: bold;
 }
 
+.context-card:first-child .symbol {
+    color: #56750d;
+}
+
 .context-card:last-child .symbol {
     color: var(--orange);
 }
@@ -352,6 +356,7 @@ body {
 .context-card p {
     color: var(--muted);
     font-size: .5em;
+    overflow-wrap: anywhere;
 }
 
 .priority-list {
